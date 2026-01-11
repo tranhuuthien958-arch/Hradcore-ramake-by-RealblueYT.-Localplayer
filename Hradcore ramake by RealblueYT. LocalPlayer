@@ -1,0 +1,76 @@
+-- Anti double run
+if getgenv().REALBLUE_FINAL then return end
+getgenv().REALBLUE_FINAL = true
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local StarterGui = game:GetService("StarterGui")
+local player = Players.LocalPlayer
+
+-- ===============================
+-- LOAD HARDCORE MODE
+-- ===============================
+task.spawn(function()
+	loadstring(game:HttpGet(
+		"https://raw.githubusercontent.com/localplayerr/Doors-stuff/refs/heads/main/Hardcore%20v4%20recreate/main%20code",
+		true
+	))()
+end)
+
+-- ===============================
+-- LOAD SPRINT SCRIPT (NO UI)
+-- ===============================
+task.spawn(function()
+	loadstring(game:HttpGet(
+		"https://raw.githubusercontent.com/trungdepth-dot/Sprint-stamina-v2/refs/heads/main/Sprint",
+		true
+	))()
+end)
+
+-- ===============================
+-- CHAT MESSAGE (FIXED)
+-- ===============================
+task.spawn(function()
+	for i = 1, 12 do
+		local ok = pcall(function()
+			StarterGui:SetCore("ChatMakeSystemMessage", {
+				Text = "script by RealblueYT and vuivuiviu2 and voorPr0 and chubeteliet",
+				Color = Color3.fromRGB(0,170,255),
+				Font = Enum.Font.SourceSansBold,
+				TextSize = 18
+			})
+		end)
+		if ok then break end
+		task.wait(1)
+	end
+end)
+
+-- ===============================
+-- UI ROOT
+-- ===============================
+local gui = Instance.new("ScreenGui")
+gui.Name = "RealblueUI"
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
+
+-- ===============================
+-- RAINBOW CREDIT (BOTTOM)
+-- ===============================
+local credit = Instance.new("TextLabel")
+credit.Size = UDim2.new(0, 320, 0, 22)
+credit.Position = UDim2.new(0, 10, 1, -30)
+credit.BackgroundTransparency = 1
+credit.Text = "script update ramake by RealblueYT"
+credit.Font = Enum.Font.SourceSansBold
+credit.TextSize = 14
+credit.TextStrokeTransparency = 0.5
+credit.Parent = gui
+
+task.spawn(function()
+	local h = 0
+	while true do
+		h = (h + 0.005) % 1
+		credit.TextColor3 = Color3.fromHSV(h, 1, 1)
+		RunService.RenderStepped:Wait()
+	end
+end)
